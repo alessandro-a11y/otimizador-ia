@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Entrevista em Andamento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Outfit', sans-serif; background: #020617; color: white; margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+        /* HEADER ESCURO E DISCRETO */
+        .header { padding: 1rem 2rem; border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center; background: #0f172a; }
+        .logo { font-weight:700; font-size:1.1rem; color: #f8fafc; display: flex; align-items: center; gap: 10px; }
+        .badge { background: #1e293b; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: #94a3b8; border: 1px solid #334155; }
+        .exit { color: #ef4444; text-decoration: none; font-weight: 600; transition: 0.2s; }
+        .exit:hover { color: #dc2626; }
+
+        /* ÁREA PRINCIPAL */
+        .main-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; gap: 20px; position: relative; }
+
+        /* CARTÃO DA PERGUNTA */
+        .question-box {
+            text-align: center; max-width: 900px; width: 100%;
+            animation: fadeIn 0.8s ease; z-index: 10;
+        }
+        .label { color: #3b82f6; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .q-text { font-size: 1.8rem; font-weight: 600; line-height: 1.4; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+
+        /* ÁREA DA CÂMERA */
+        .camera-frame {
+            width: 100%; max-width: 720px; aspect-ratio: 16/9; background: black; border-radius: 24px;
+            overflow: hidden; border: 2px solid #334155; position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            transition: border-color 0.3s;
+        }
+        .camera-frame.recording { border-color: #ef4444; box-shadow: 0 0 30px rgba(239, 68, 68, 0.2); }
+
+        video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+
+        /* INDICADOR DE GRAVAÇÃO */
+        .rec-indicator {
+            position: absolute; top: 20px; left: 20px; background: rgba(239, 68, 68, 0.9); color: white;
+            padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;
+            display: none; align-items: center; gap: 8px; backdrop-filter: blur(4px);
+        }
+        .rec-dot { width: 8px; height: 8px; background: white; border-radius: 50%; animation: blink 1s infinite; }
+
+        /* CONTROLES */
+        .controls { display: flex; gap: 15px; margin-top: 10px; z-index: 10; }
+        .btn { padding: 14px 32px; border-radius: 50px; border: none; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.2s; }
+
+        .btn-rec { background: #ef4444; color: white; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); }
+        .btn-rec:hover { background: #dc2626; transform: scale(1.05); }
+
+        .btn-stop { background: #334155; color: white; display: none; border: 1px solid #475569; }
+        .btn-stop:hover { background: #475569; }
+
+        .btn-next { background: transparent; border: 2px solid #3b82f6; color: #3b82f6; }
+        .btn-next:hover { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border-color: #60a5fa; }
+
+        /* MODAL DE FEEDBACK */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 999; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.show { opacity: 1; }
+
+        .modal { background: #1e293b; padding: 2.5rem; border-radius: 24px; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; border: 1px solid #334155; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); position: relative; transform: translateY(20px); transition: transform 0.3s; }
+        .modal-overlay.show .modal { transform: translateY(0); }
+
+        /* Scrollbar Customizada */
+        .modal::-webkit-scrollbar { width: 8px; }
+        .modal::-webkit-scrollbar-track { background: #0f172a; }
+        .modal::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+        .transcript { background: #0f172a; padding: 1rem; border-radius: 12px; color: #94a3b8; font-style: italic; border: 1px solid #334155; margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
+
+        /* Ícone de som */
+        .speaking-icon { color: #10b981; display: none; font-size: 1.2rem; animation: pulseSpeaker 1s infinite; }
+
+        @keyframes blink { 50% { opacity: 0; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseSpeaker { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* Classes Utilitárias */
+        .hidden { display: none !important; }
+        .flex { display: flex !important; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">⚡ Simulador IA</div>
+    <div class="badge">Setor: {{ industry }}</div>
+    <a href="{% url 'interview_setup' %}" class="exit">Encerrar Sessão</a>
+</div>
+
+<div class="main-area">
+    <!-- Pergunta -->
+    <div class="question-box">
+        <div class="label">
+            <span>PERGUNTA DO RECRUTADOR</span>
+            <span class="speaking-icon" id="speaking-icon">🔊</span>
+        </div>
+        <div class="q-text" id="q-text">{{ question }}</div>
+    </div>
+
+    <!-- Câmera -->
+    <div class="camera-frame" id="camera-border">
+        <video id="video" autoplay muted playsinline></video>
+        <div class="rec-indicator" id="rec-tag">
+            <div class="rec-dot"></div> GRAVANDO
+        </div>
+    </div>
+
+    <!-- Controles -->
+    <div class="controls">
+        <button class="btn btn-rec" id="btnStart" onclick="startRec()">
+            <span>🎤</span> Responder
+        </button>
+
+        <button class="btn btn-stop" id="btnStop" onclick="stopRec()">
+            <span>⏹️</span> Enviar Resposta
+        </button>
+
+        <button class="btn btn-next" id="btnSkip" onclick="newQ()">
+            <span>🔄</span> Pular Pergunta
+        </button>
+    </div>
+</div>
+
+<!-- Modal de Feedback -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+        <h2 style="color:#60a5fa; margin-top:0; font-size:1.5rem;">Análise da Resposta</h2>
+        <p style="color:#cbd5e1; margin-bottom:0.5rem; font-weight:600; font-size:0.9rem; text-transform:uppercase;">O que você disse:</p>
+        <div class="transcript" id="transc"></div>
+
+        <p style="color:#cbd5e1; margin-bottom:0.5rem; font-weight:600; font-size:0.9rem; text-transform:uppercase;">Feedback do Especialista:</p>
+        <div id="feedback" style="line-height:1.7; color:#e2e8f0;"></div>
+
+        <button class="btn btn-next" style="width:100%; margin-top:30px; justify-content:center; background: #334155; color:white; border:none;" onclick="closeModal(); newQ()">
+            Próxima Pergunta ➔
+        </button>
+    </div>
+</div>
+
+<script>
+    let mediaRecorder, chunks = [];
+    const video = document.getElementById('video');
+    const speakingIcon = document.getElementById('speaking-icon');
+
+    // Inicializar Câmera
+    navigator.mediaDevices.getUserMedia({video: {width: 1280, height: 720}, audio: true})
+        .then(s => {
+            video.srcObject = s;
+            mediaRecorder = new MediaRecorder(s);
+            mediaRecorder.ondataavailable = e => chunks.push(e.data);
+            mediaRecorder.onstop = send;
+        })
+        .catch(e => alert("Erro ao acessar câmera: " + e));
+
+    // Tocar Áudio (TTS)
+    function playAudio(b64) {
+        if(!b64) return;
+        const audio = new Audio("data:audio/mp3;base64," + b64);
+        speakingIcon.style.display = 'inline';
+        audio.onended = () => speakingIcon.style.display = 'none';
+        audio.play().catch(() => console.log("Clique para permitir áudio"));
+    }
+
+    // Toca áudio inicial se existir
+    if("{{ audio_base64 }}") setTimeout(() => playAudio("{{ audio_base64 }}"), 1000);
+
+    // Funções de Gravação
+    function startRec() {
+        chunks = []; mediaRecorder.start();
+        updateUI(true);
+    }
+
+    function stopRec() {
+        mediaRecorder.stop();
+        document.getElementById('btnStop').innerText = "⏳ Analisando...";
+        document.getElementById('btnStop').disabled = true;
+    }
+
+    function updateUI(isRecording) {
+        const btnStart = document.getElementById('btnStart');
+        const btnStop = document.getElementById('btnStop');
+        const btnSkip = document.getElementById('btnSkip');
+        const recTag = document.getElementById('rec-tag');
+        const camBorder = document.getElementById('camera-border');
+
+        if (isRecording) {
+            btnStart.style.display = 'none';
+            btnSkip.style.display = 'none';
+            btnStop.style.display = 'flex';
+            btnStop.innerText = "⏹️ Enviar Resposta";
+            btnStop.disabled = false;
+            recTag.style.display = 'flex';
+            camBorder.classList.add('recording');
+        } else {
+            btnStart.style.display = 'flex';
+            btnSkip.style.display = 'flex';
+            btnStop.style.display = 'none';
+            recTag.style.display = 'none';
+            camBorder.classList.remove('recording');
+        }
+    }
+
+    // Enviar para Backend
+    async function send() {
+        const blob = new Blob(chunks, {type: 'audio/webm'});
+        const fd = new FormData();
+        fd.append('audio_data', blob, 'rec.webm');
+        fd.append('question_text', document.getElementById('q-text').innerText);
+
+        try {
+            const res = await fetch('/entrevista/analyze/', {method:'POST', body:fd});
+            const d = await res.json();
+
+            // Popula Modal
+            document.getElementById('transc').innerText = `"${d.transcript}"`;
+            // Converte quebras de linha do backend para HTML
+            document.getElementById('feedback').innerHTML = d.feedback ?
+                d.feedback.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>') :
+                `<span style="color:#ef4444">${d.error}</span>`;
+
+            openModal();
+        } catch(e) { alert("Erro na análise: " + e); }
+
+        updateUI(false);
+    }
+
+    // Nova Pergunta
+    async function newQ() {
+        document.getElementById('q-text').style.opacity = 0.5;
+        const res = await fetch('/entrevista/new_question/');
+        const d = await res.json();
+
+        document.getElementById('q-text').innerText = d.question;
+        document.getElementById('q-text').style.opacity = 1;
+
+        if(d.audio_base64) playAudio(d.audio_base64);
+    }
+
+    // Controle do Modal
+    function openModal() {
+        const el = document.getElementById('modal-overlay');
+        el.style.display = 'flex';
+        setTimeout(() => el.classList.add('show'), 10);
+    }
+
+    function closeModal() {
+        const el = document.getElementById('modal-overlay');
+        el.classList.remove('show');
+        setTimeout(() => el.style.display = 'none', 300);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+--- Segurança e Senhas ---
+
+.env
+.env.local
+
+--- Python e Django ---
+
+pycache/
+*.pyc
+*.pyo
+db.sqlite3
+
+--- Arquivos de Mídia e Uploads (Não enviar para o GitHub) ---
+
+media/
+uploads/
+
+--- Bancos Vetoriais da IA (Pesados e Locais) ---
+
+vector_db/
+vector_db_linkedin/
+
+--- Ambientes Virtuais e IDEs ---
+
+venv/
+env/
+.idea/
+.vscode/
+.DS_Store
