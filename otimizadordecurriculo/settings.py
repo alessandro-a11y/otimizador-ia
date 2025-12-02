@@ -11,7 +11,8 @@ SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
 
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = ["otimizador-ia-sua-url.onrender.com", "127.0.0.1", "localhost"]
+# LINHA CORRIGIDA
+ALLOWED_HOSTS = ["otimizador-ia-5mkw.onrender.com", "127.0.0.1", "localhost"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
