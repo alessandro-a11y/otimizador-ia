@@ -7,23 +7,18 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # 1. Rota do Otimizador de Currículos (App Padrão)
-    # Inclui as rotas /upload/ e /ask/ definidas em optimizer.urls
+    # Rota principal / -> upload
+    path('', RedirectView.as_view(url='/upload/', permanent=False)),
+
+    # 1. App Otimizador de currículo
     path('', include('optimizer.urls')),
 
-    # 2. Rota do Analisador de LinkedIn (ATIVADO)
-    # Acessível em: http://127.0.0.1:8000/linkedin/
+    # 2. Analisador de LinkedIn
     path('linkedin/', include('linkedin_analyser.urls')),
 
-    # 3. Rota do Simulador de Entrevista (ATIVADO)
-    # Acessível em: http://127.0.0.1:8000/entrevista/
+    # 3. Simulador de Entrevista
     path('entrevista/', include('interview_simulator.urls')),
-
-    # Redireciona a raiz do site (/) direto para o upload de currículos
-    # Útil para quando o utilizador acede apenas ao domínio base
-    path('', RedirectView.as_view(url='/upload/', permanent=False)),
 ]
 
-# Configuração para servir ficheiros de média (PDFs/Áudios) no modo Debug
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
