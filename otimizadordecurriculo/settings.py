@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 
@@ -10,7 +11,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
 
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["otimizador-ia-sua-url.onrender.com", "127.0.0.1", "localhost"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,7 +21,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Apps do seu projeto
     'optimizer',
     'linkedin_analyser',
     'interview_simulator',
@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -36,14 +37,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# 🔥 AQUI ESTAVA O ERRO
 ROOT_URLCONF = 'otimizadordecurriculo.urls'
 WSGI_APPLICATION = 'otimizadordecurriculo.wsgi.application'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -56,13 +56,23 @@ TEMPLATES = [
     },
 ]
 
-# Banco (pode trocar depois)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DB_URL = os.getenv("DATABASE_URL")
+
+if DB_URL:
+    DATABASES['default'] = dj_database_url.config(
+        default=DB_URL,
+        conn_max_age=600,
+        conn_health_check=True,
+    )
+    if 'OPTIONS' in DATABASES['default']:
+        DATABASES['default']['OPTIONS']['sslmode'] = 'require'
 
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Maceio'
@@ -72,6 +82,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
