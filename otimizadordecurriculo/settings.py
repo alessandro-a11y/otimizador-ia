@@ -14,6 +14,10 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 # LINHA CORRIGIDA
 ALLOWED_HOSTS = ["otimizador-ia-5mkw.onrender.com", "127.0.0.1", "localhost"]
 
+# 💡 CORREÇÃO CSRF: Adicionando a URL de produção para trusted origins (origens confiáveis).
+# O Django verificará esta lista se o cabeçalho Referer estiver ausente.
+CSRF_TRUSTED_ORIGINS = ['https://otimizador-ia-5mkw.onrender.com']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
