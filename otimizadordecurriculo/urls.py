@@ -2,16 +2,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Rota principal / -> upload
-    path('', RedirectView.as_view(url='/upload/', permanent=False)),
-
-    # 1. App Otimizador de currículo
-    path('', include('optimizer.urls')),
+    # 1. App Otimizador de currículo (Agora, "/" inclui todos os padrões do optimizer)
+    path('', include('optimizer.urls')), 
 
     # 2. Analisador de LinkedIn
     path('linkedin/', include('linkedin_analyser.urls')),
