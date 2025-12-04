@@ -3,13 +3,11 @@ services:
     name: otimizador-ia
     env: python
     plan: free
-    # Comandos corrigidos para incluir migrações e coleta de estáticos
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    # Manter o buildCommand focado em instalações e estáticos
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
     
-    # Comandos corrigidos para apontar para o WSGI do projeto principal (otimizadordecurriculo)
-    # Assumindo que a estrutura do seu projeto Django é:
-    # otimizadordecurriculo/wsgi.py
-    startCommand: "gunicorn otimizadordecurriculo.wsgi"
+    # Mover o migrate para o startCommand, garantindo que ele rode antes do Gunicorn.
+    startCommand: "python manage.py migrate && gunicorn otimizadordecurriculo.wsgi"
     
     envVars:
       - key: PYTHON_VERSION
