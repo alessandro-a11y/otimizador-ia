@@ -3,8 +3,14 @@ services:
     name: otimizador-ia
     env: python
     plan: free
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn otimizador.wsgi:application"
+    # Comandos corrigidos para incluir migrações e coleta de estáticos
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    
+    # Comandos corrigidos para apontar para o WSGI do projeto principal (otimizadordecurriculo)
+    # Assumindo que a estrutura do seu projeto Django é:
+    # otimizadordecurriculo/wsgi.py
+    startCommand: "gunicorn otimizadordecurriculo.wsgi"
+    
     envVars:
       - key: PYTHON_VERSION
         value: 3.12
