@@ -6,105 +6,105 @@
 <title>AI Recruiter | Currículos</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
- :root {
- --primary: #4f46e5;
- --primary-hover: #4338ca;
- --bg-body: #f8fafc;
- --surface: #ffffff;
- --text-main: #1e293b;
- --text-light: #64748b;
- --border: #e2e8f0;
- --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
- --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
- --radius: 16px;
- }
+:root {
+--primary: #4f46e5;
+--primary-hover: #4338ca;
+--bg-body: #f8fafc;
+--surface: #ffffff;
+--text-main: #1e293b;
+--text-light: #64748b;
+--border: #e2e8f0;
+--shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+--shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+--radius: 16px;
+}
 
- * { margin: 0; padding: 0; box-sizing: border-box; }
- body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); padding-top: 80px; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); padding-top: 80px; }
 
- /* NAVBAR */
- .navbar {
- position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.9);
- backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
- z-index: 1000; padding: 0 2rem; height: 70px; display: flex; align-items: center; justify-content: space-between;
- }
- .logo { font-weight: 800; font-size: 1.2rem; color: var(--primary); display: flex; align-items: center; gap: 8px; text-decoration: none; }
- .nav-links { display: flex; gap: 8px; }
- .nav-item {
- text-decoration: none; color: var(--text-light); font-weight: 500; padding: 0.6rem 1.2rem; border-radius: 12px; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;
- }
- .nav-item:hover { background: #f1f5f9; color: var(--text-main); }
- .nav-item.active { background: #eef2ff; color: var(--primary); font-weight: 600; }
+/* NAVBAR */
+.navbar {
+position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.9);
+backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+z-index: 1000; padding: 0 2rem; height: 70px; display: flex; align-items: center; justify-content: space-between;
+}
+.logo { font-weight: 800; font-size: 1.2rem; color: var(--primary); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.nav-links { display: flex; gap: 8px; }
+.nav-item {
+text-decoration: none; color: var(--text-light); font-weight: 500; padding: 0.6rem 1.2rem; border-radius: 12px; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;
+}
+.nav-item:hover { background: #f1f5f9; color: var(--text-main); }
+.nav-item.active { background: #eef2ff; color: var(--primary); font-weight: 600; }
 
- .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
+.container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
 
- .hero-header { text-align: center; margin-bottom: 3rem; }
- .hero-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(to right, #4f46e5, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
- .hero-header p { color: var(--text-light); font-size: 1.1rem; }
+.hero-header { text-align: center; margin-bottom: 3rem; }
+.hero-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(to right, #4f46e5, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-header p { color: var(--text-light); font-size: 1.1rem; }
 
- /* --- UPLOAD (FORMULÁRIO DJANGO) --- */
- .upload-card {
- background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-md); padding: 2rem;
- border: 1px solid var(--border); transition: transform 0.2s;
- }
+/* --- UPLOAD (FORMULÁRIO DJANGO) --- */
+.upload-card {
+background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-md); padding: 2rem;
+border: 1px solid var(--border); transition: transform 0.2s;
+}
 
- .drop-zone {
- display: block; 
- width: 100%;
- border: 2px dashed #cbd5e1;
- border-radius: 12px;
- padding: 3rem 2rem;
- text-align: center;
- cursor: pointer;
- background: #f8fafc;
- transition: all 0.3s;
- position: relative;
- box-sizing: border-box;
- }
- .drop-zone:hover { border-color: var(--primary); background: #eef2ff; transform: scale(1.01); }
- .icon-upload { font-size: 3rem; color: #94a3b8; margin-bottom: 1rem; transition: color 0.3s; }
- .drop-zone:hover .icon-upload { color: var(--primary); }
+.drop-zone {
+display: block; 
+width: 100%;
+border: 2px dashed #cbd5e1;
+border-radius: 12px;
+padding: 3rem 2rem;
+text-align: center;
+cursor: pointer;
+background: #f8fafc;
+transition: all 0.3s;
+position: relative;
+box-sizing: border-box;
+}
+.drop-zone:hover { border-color: var(--primary); background: #eef2ff; transform: scale(1.01); }
+.icon-upload { font-size: 3rem; color: #94a3b8; margin-bottom: 1rem; transition: color 0.3s; }
+.drop-zone:hover .icon-upload { color: var(--primary); }
 
- .file-name-badge {
- margin-top: 1rem; display: inline-block; background: #dbeafe; color: #1e40af;
- padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;
- }
+.file-name-badge {
+margin-top: 1rem; display: inline-block; background: #dbeafe; color: #1e40af;
+padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;
+}
 
- /* CARDS E CHAT */
- .section-title { margin: 3rem 0 1.5rem 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
- .section-title::before { content: ''; width: 4px; height: 24px; background: var(--primary); border-radius: 2px; }
+/* CARDS E CHAT */
+.section-title { margin: 3rem 0 1.5rem 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+.section-title::before { content: ''; width: 4px; height: 24px; background: var(--primary); border-radius: 2px; }
 
- .actions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+.actions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
 
- .card-btn {
- background: var(--surface); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border);
- cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
- }
- .card-btn:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary); }
- .card-btn h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-main); }
- .card-btn p { font-size: 0.9rem; color: var(--text-light); line-height: 1.4; }
- .card-icon { font-size: 1.5rem; margin-bottom: 1rem; display: inline-block; padding: 10px; background: #f1f5f9; border-radius: 10px; }
+.card-btn {
+background: var(--surface); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border);
+cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.card-btn:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+.card-btn h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-main); }
+.card-btn p { font-size: 0.9rem; color: var(--text-light); line-height: 1.4; }
+.card-icon { font-size: 1.5rem; margin-bottom: 1rem; display: inline-block; padding: 10px; background: #f1f5f9; border-radius: 10px; }
 
- .chat-wrapper { background: var(--surface); border-radius: var(--radius); margin-top: 2rem; border: 1px solid var(--border); overflow: hidden; }
- .chat-input-area { padding: 1rem; background: #f8fafc; border-top: 1px solid var(--border); display: flex; gap: 10px; }
- input[type="text"] {
- flex: 1; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; outline: none; font-family: inherit;
- }
- input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1); }
+.chat-wrapper { background: var(--surface); border-radius: var(--radius); margin-top: 2rem; border: 1px solid var(--border); overflow: hidden; }
+.chat-input-area { padding: 1rem; background: #f8fafc; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+input[type="text"] {
+flex: 1; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; outline: none; font-family: inherit;
+}
+input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1); }
 
- .btn-send {
- background: var(--primary); color: white; border: none; padding: 0 24px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s;
- }
- .btn-send:hover { background: var(--primary-hover); }
+.btn-send {
+background: var(--primary); color: white; border: none; padding: 0 24px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s;
+}
+.btn-send:hover { background: var(--primary-hover); }
 
- .response-box { padding: 2rem; min-height: 100px; color: var(--text-main); line-height: 1.7; white-space: pre-wrap; }
- .loading { color: var(--text-light); font-style: italic; animation: pulse 1.5s infinite; }
+.response-box { padding: 2rem; min-height: 100px; color: var(--text-main); line-height: 1.7; white-space: pre-wrap; }
+.loading { color: var(--text-light); font-style: italic; animation: pulse 1.5s infinite; }
 
- @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+@keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 
-    /* Estilos para feedback de sucesso/erro Django/JS */
-    .feedback-success { background:#dcfce7; color:#166534; padding:15px; border-radius:12px; margin-bottom:20px; font-weight:500; border:1px solid #bbf7d0; }
-    .feedback-error { background:#fee2e2; color:#991b1b; padding:15px; border-radius:12px; margin-bottom:20px; font-weight:500; border:1px solid #fecaca; }
+/* Estilos para feedback de sucesso/erro Django/JS */
+.feedback-success { background:#dcfce7; color:#166534; padding:15px; border-radius:12px; margin-bottom:20px; font-weight:500; border:1px solid #bbf7d0; }
+.feedback-error { background:#fee2e2; color:#991b1b; padding:15px; border-radius:12px; margin-bottom:20px; font-weight:500; border:1px solid #fecaca; }
 </style>
 </head>
 <body>
@@ -112,148 +112,148 @@
 <nav class="navbar">
 <a href="/" class="logo">⚡ AI Recruiter</a>
 <div class="nav-links">
- <a href="{% url 'upload_route' %}" class="nav-item active"><span>📄</span> Currículo</a>
- <a href="/linkedin/" class="nav-item"><span>🔵</span> LinkedIn</a>
- <a href="/entrevista/" class="nav-item"><span>🎤</span> Entrevista</a>
+<a href="{% url 'upload_interface' %}" class="nav-item active"><span>📄</span> Currículo</a>
+<a href="/linkedin/" class="nav-item"><span>🔵</span> LinkedIn</a>
+<a href="/entrevista/" class="nav-item"><span>🎤</span> Entrevista</a>
 </div>
 </nav>
 
 <div class="container">
 <div class="hero-header">
- <h1>Otimizador de Currículos</h1>
- <p>Passe pelos robôs de recrutamento (ATS) com facilidade.</p>
+<h1>Otimizador de Currículos</h1>
+<p>Passe pelos robôs de recrutamento (ATS) com facilidade.</p>
 </div>
 
-    <div id="feedback-message">
-        {% if success %}
-            <div class="feedback-success">{{ success }}</div>
-        {% elif error %}
-            <div class="feedback-error">{{ error }}</div>
-        {% endif %}
-    </div>
+<div id="feedback-message">
+{% if success %}
+<div class="feedback-success">{{ success }}</div>
+{% elif error %}
+<div class="feedback-error">{{ error }}</div>
+{% endif %}
+</div>
 
-    <form method="post" enctype="multipart/form-data" action="{% url 'upload_route' %}" class="upload-card">
-        {% csrf_token %}
-       <label for="file" class="drop-zone">
-          <div class="icon-upload">📄</div>
-          <div style="font-weight:600; font-size:1.1rem;">Clique para selecionar o arquivo</div>
-          <div style="color:#94a3b8; font-size:0.9rem; margin-top:5px;">PDF, DOCX, TXT ou Imagem (OCR)</div>
-          <div id="file-name" class="file-name-badge" style="display:none;"></div>
-          <input type="file" name="file" id="file" style="display:none" onchange="showFileName(this)">
-       </label>
-       <div style="margin-top:1.5rem; text-align:center;">
-                  <button type="submit" class="btn-send" style="width:100%; padding:15px; font-size:1.1rem;">Processar Documento</button>
-       </div>
-   </form>
+<form method="post" enctype="multipart/form-data" action="{% url 'upload_interface' %}" class="upload-card">
+{% csrf_token %}
+ <label for="file" class="drop-zone">
+ <div class="icon-upload">📄</div>
+ <div style="font-weight:600; font-size:1.1rem;">Clique para selecionar o arquivo</div>
+ <div style="color:#94a3b8; font-size:0.9rem; margin-top:5px;">PDF, DOCX, TXT ou Imagem (OCR)</div>
+ <div id="file-name" class="file-name-badge" style="display:none;"></div>
+ <input type="file" name="file" id="file" style="display:none" onchange="showFileName(this)">
+ </label>
+ <div style="margin-top:1.5rem; text-align:center;">
+ <button type="submit" class="btn-send" style="width:100%; padding:15px; font-size:1.1rem;">Processar Documento</button>
+ </div>
+ </form>
 
 <h2 class="section-title">Ferramentas de IA</h2>
 <div class="actions-grid">
- <div class="card-btn" onclick="askAI('Faça uma análise SWOT (Forças, Fraquezas, Oportunidades) detalhada deste currículo.')">
- <span class="card-icon">🔍</span>
- <h3>Análise SWOT</h3>
- <p>Descubra seus pontos fortes e fracos em segundos.</p>
- </div>
- <div class="card-btn" onclick="askAI('Quais palavras-chave essenciais para ATS faltam neste perfil? Liste 5.')">
- <span class="card-icon">🤖</span>
- <h3>Hackear ATS</h3>
- <p>Otimize para os robôs de triagem automática.</p>
- </div>
- <div class="card-btn" onclick="askAI('Reescreva o resumo profissional para torná-lo executivo e orientado a resultados.')">
- <span class="card-icon">✨</span>
- <h3>Resumo Executivo</h3>
- <p>Reescreva seu perfil com foco em impacto.</p>
- </div>
- <div class="card-btn" onclick="askAI('Dê uma nota de 0 a 10 rigorosa e justifique cada ponto perdido.')">
- <span class="card-icon">⭐</span>
- <h3>Nota do Recrutador</h3>
- <p>Uma avaliação numérica fria e direta.</p>
- </div>
+<div class="card-btn" onclick="askAI('Faça uma análise SWOT (Forças, Fraquezas, Oportunidades) detalhada deste currículo.')">
+<span class="card-icon">🔍</span>
+<h3>Análise SWOT</h3>
+<p>Descubra seus pontos fortes e fracos em segundos.</p>
+</div>
+<div class="card-btn" onclick="askAI('Quais palavras-chave essenciais para ATS faltam neste perfil? Liste 5.')">
+<span class="card-icon">🤖</span>
+<h3>Hackear ATS</h3>
+<p>Otimize para os robôs de triagem automática.</p>
+</div>
+<div class="card-btn" onclick="askAI('Reescreva o resumo profissional para torná-lo executivo e orientado a resultados.')">
+<span class="card-icon">✨</span>
+<h3>Resumo Executivo</h3>
+<p>Reescreva seu perfil com foco em impacto.</p>
+</div>
+<div class="card-btn" onclick="askAI('Dê uma nota de 0 a 10 rigorosa e justifique cada ponto perdido.')">
+<span class="card-icon">⭐</span>
+<h3>Nota do Recrutador</h3>
+<p>Uma avaliação numérica fria e direta.</p>
+</div>
 </div>
 
 <div class="chat-wrapper">
- <div id="response-area" class="response-box"><span style="color:#94a3b8">A análise aparecerá aqui...</span></div>
- <div class="chat-input-area">
- <input type="text" id="question" placeholder="Faça uma pergunta específica...">
- <button class="btn-send" onclick="askAI(document.getElementById('question').value)">Enviar</button>
- </div>
+<div id="response-area" class="response-box"><span style="color:#94a3b8">A análise aparecerá aqui...</span></div>
+<div class="chat-input-area">
+<input type="text" id="question" placeholder="Faça uma pergunta específica...">
+<button class="btn-send" onclick="askAI(document.getElementById('question').value)">Enviar</button>
+</div>
 </div>
 </div>
 
 <script>
-    // FUNÇÕES DE UTILIDADE PARA AJAX (CSRF)
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                let cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    const csrftoken = getCookie('csrftoken');
-
-    // Variável preenchida pelo backend do Django a partir da sessão (views.py)
-    // Se não houver texto extraído, será uma string vazia.
-    let extractedText = `{{ extracted_text|default:'' }}`; 
-
-  // Função para mostrar o nome do arquivo selecionado
-function showFileName(input) {
- const badge = document.getElementById('file-name');
- if(input.files[0]){
- badge.innerText = "📎 " + input.files[0].name;
- input.name = 'file'; 
- badge.style.display = "inline-block";
- }
+// FUNÇÕES DE UTILIDADE PARA AJAX (CSRF)
+function getCookie(name) {
+let cookieValue = null;
+if (document.cookie && document.cookie !== '') {
+const cookies = document.cookie.split(';');
+for (let i = 0; i < cookies.length; i++) {
+let cookie = cookies[i].trim();
+if (cookie.substring(0, name.length + 1) === (name + '=')) {
+cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+break;
 }
-    
-    // ATENÇÃO: A função uploadResume() FOI REMOVIDA, POIS O FORMULÁRIO LIDARÁ COM ISSO.
-    
-  // FUNÇÃO CORRIGIDA: AGORA CHAMA A ROTA LOCAL /ask/ (que é a view proxy)
+}
+}
+return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+// Variável preenchida pelo backend do Django a partir da sessão (views.py)
+// Se não houver texto extraído, será uma string vazia.
+let extractedText = `{{ extracted_text|default:'' }}`; 
+
+ // Função para mostrar o nome do arquivo selecionado
+function showFileName(input) {
+const badge = document.getElementById('file-name');
+if(input.files[0]){
+badge.innerText = "📎 " + input.files[0].name;
+input.name = 'file'; 
+badge.style.display = "inline-block";
+}
+}
+
+// ATENÇÃO: A função uploadResume() FOI REMOVIDA, POIS O FORMULÁRIO LIDARÁ COM ISSO.
+
+ // FUNÇÃO CORRIGIDA: AGORA CHAMA A ROTA LOCAL /ask/ (que é a view proxy)
 async function askAI(txt) {
-    const resp = document.getElementById('response-area');
-    if(!txt) return;
-    
-    if(!extractedText || extractedText === '') {
-      resp.innerText = "❌ Por favor, faça o upload e processe um currículo primeiro.";
-      return;
-    }
+const resp = document.getElementById('response-area');
+if(!txt) return;
 
-    resp.innerHTML = "<div class='loading'>Analisando dados do currículo...</div>";
-    
-    try {
-      // Requisição para a rota LOCAL do Django
-         const r = await fetch('{% url "ask_rag" %}', {
-        method:'POST', 
-        headers:{
-                    'Content-Type':'application/json',
-                    'X-CSRFToken': csrftoken 
-                }, 
-        body:JSON.stringify({
-          // A view ask_rag espera a chave 'q' para a pergunta
-          q: txt 
-        })
-      });
-      
-      if (!r.ok) {
-        throw new Error(`Erro de rede ou status ${r.status}`);
-      }
+if(!extractedText || extractedText === '') {
+ resp.innerText = "❌ Por favor, faça o upload e processe um currículo primeiro.";
+ return;
+}
 
-         const d = await r.json();
-      
-      // Retorna 'answer' ou 'error' do JsonResponse do Django
-         resp.innerText = d.answer || d.error || "Resposta desconhecida da IA.";
+resp.innerHTML = "<div class='loading'>Analisando dados do currículo...</div>";
 
-      // Limpar campo de input após o envio
-      document.getElementById('question').value = '';
-      
-    } catch(e) { 
-      resp.innerText = `❌ Erro ao enviar a pergunta: ${e.message}.`; 
-    }
+try {
+ // Requisição para a rota LOCAL do Django. Usando o caminho literal '/ask/'
+const r = await fetch('/ask/', { 
+method:'POST', 
+headers:{
+'Content-Type':'application/json',
+'X-CSRFToken': csrftoken 
+}, 
+body:JSON.stringify({
+ // A view ask_rag espera a chave 'q' para a pergunta
+ q: txt 
+})
+ });
+ 
+ if (!r.ok) {
+throw new Error(`Erro de rede ou status ${r.status}`);
+ }
+
+const d = await r.json();
+ 
+ // Retorna 'answer' ou 'error' do JsonResponse do Django
+resp.innerText = d.answer || d.error || "Resposta desconhecida da IA.";
+
+ // Limpar campo de input após o envio
+ document.getElementById('question').value = '';
+ 
+} catch(e) { 
+ resp.innerText = `❌ Erro ao enviar a pergunta: ${e.message}.`; 
+}
 }
 </script>
 </body>
