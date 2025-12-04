@@ -1,44 +1,58 @@
-import json
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
+import json
+# from .utils import extract_text_from_file # Certifique-se de importar sua função real de utilidade
 
+def upload_interface_and_process(request):
+    success_message = request.session.pop('success', None)
+    error_message = request.session.pop('error', None)
+    extracted_text = request.session.get('extracted_text', '')
 
-@csrf_exempt
-@require_http_methods(["GET", "POST"])
-def process_uploaded_pdf_api(request):
     if request.method == 'POST':
         if 'file' in request.FILES:
             uploaded_file = request.FILES['file']
             
             try:
+                # Substitua esta simulação pela sua função real de extração
+                text = f"Texto extraído de {uploaded_file.name}. Este é o conteúdo que será usado pela IA." 
                 
-                extracted_text = f"✅ Texto extraído com sucesso do arquivo: {uploaded_file.name}. (Conteúdo de teste para a IA)"
+                request.session['extracted_text'] = text
+                request.session['success'] = f"✅ Sucesso! '{uploaded_file.name}' processado. Agora você pode perguntar à IA."
                 
-                return JsonResponse({'extracted_text': extracted_text}, status=200)
+                return HttpResponseRedirect(reverse('upload_interface')) 
 
             except Exception as e:
-                return JsonResponse({'error': f"Erro interno de processamento de arquivo: {str(e)}"}, status=500)
+                request.session['error'] = f"❌ Erro ao processar o arquivo: {str(e)}"
+                return HttpResponseRedirect(reverse('upload_interface')) 
         else:
-            return JsonResponse({'error': 'Nenhum arquivo encontrado no POST.'}, status=400)
+            request.session['error'] = "❌ Nenhum arquivo enviado."
+            return HttpResponseRedirect(reverse('upload_interface'))
+
+    context = {
+        'extracted_text': extracted_text,
+        'success': success_message,
+        'error': error_message,
+    }
     
-    return JsonResponse({'message': 'API de Otimizador de Currículo - OK'}, status=200)
+    return render(request, 'upload.html', context)
 
 
-@csrf_exempt
-@require_http_methods(["POST"])
 def ask_rag_api(request):
-    try:
-        data = json.loads(request.body)
-        full_prompt = data.get('q')
-    except json.JSONDecodeError:
-        return JsonResponse({'error': 'Requisição JSON inválida.'}, status=400)
-    
-    if not full_prompt:
-        return JsonResponse({'error': 'Nenhum prompt fornecido.'}, status=400)
+    if request.method == 'POST':
+        extracted_text = request.session.get('extracted_text', '')
+        if not extracted_text:
+            return JsonResponse({'error': 'Nenhum currículo processado. Faça o upload primeiro.'}, status=400)
 
+        try:
+            data = json.loads(request.body)
+            question = data.get('q', '').strip()
+            
+            # Substitua esta simulação pela sua lógica de IA real
+            answer = f"Resposta da IA para a pergunta '{question}': O currículo menciona 5 anos de experiência e as habilidades em Python e Django."
+            
+            return JsonResponse({'answer': answer})
+        except Exception as e:
+            return JsonResponse({'error': f'Erro na comunicação com a IA: {str(e)}'}, status=500)
     
-    ai_response = f"Resposta da IA para o prompt: '{full_prompt[:100]}...'"
-    
-    return JsonResponse({'answer': ai_response}, status=200)
+    return JsonResponse({'error': 'Método não permitido.'}, status=405)
