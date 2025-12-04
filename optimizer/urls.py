@@ -2,11 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Rota para a página de upload/inicial. 
-    # Usei o caminho 'upload/' como no seu original, mas 'upload_route' 
-    # é o nome que usaremos para o redirect interno.
-    path('upload/', views.upload_pdf, name='upload_route'),
+    # Quando o Frontend/Proxy faz o POST para a URL base (/) do Render, ele atinge esta rota.
+    path('', views.process_uploaded_pdf_api, name='upload_api_root'),
     
-    # Rota para as requisições AJAX das perguntas à IA
-    path('ask/', views.ask_rag, name='ask_rag'),
+    # Rota para as requisições POST das perguntas à IA
+    path('ask/', views.ask_rag_api, name='ask_rag_api'),
 ]
