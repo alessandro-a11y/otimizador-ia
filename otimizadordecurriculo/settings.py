@@ -61,6 +61,24 @@ TEMPLATES = [
     },
 ]
 
+# =========================================================================
+# 🎯 CORREÇÃO CRÍTICA: CACHE E SESSÃO
+# Usamos LocMemCache (cache em memória) e forçamos a sessão a usar este cache.
+# Isso resolve o "OperationalError: no such table: django_session" no Render
+# quando o banco de dados SQLite é volátil.
+# =========================================================================
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# =========================================================================
+# CONFIGURAÇÃO DE BANCO DE DADOS (Inalterada, mas o SESSION_ENGINE a ignora para sessão)
+# =========================================================================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -78,6 +96,7 @@ if DB_URL:
     )
     if 'OPTIONS' in DATABASES['default']:
         DATABASES['default']['OPTIONS']['sslmode'] = 'require'
+# =========================================================================
 
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Maceio'
