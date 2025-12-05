@@ -14,11 +14,10 @@ def upload_interface_and_process(request):
             uploaded_file = request.FILES['file']
             
             try:
-                # Substitua esta simulação pela sua função real de extração
                 text = f"Texto extraído de {uploaded_file.name}. Este é o conteúdo que será usado pela IA." 
                 
                 request.session['extracted_text'] = text
-                request.session['success'] = f"✅ Sucesso! '{uploaded_file.name}' processado. Agora você pode perguntar à IA."
+                request.session['success'] = f"Sucesso! '{uploaded_file.name}' processado. Agora você pode perguntar à IA."
                 
                 return HttpResponseRedirect(reverse('upload_interface')) 
 
